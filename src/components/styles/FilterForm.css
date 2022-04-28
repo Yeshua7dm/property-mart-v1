@@ -1,0 +1,12 @@
+form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    align-items: center;
+}
+
+input, select {
+    width: 100px;
+}
