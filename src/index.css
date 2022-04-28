@@ -3,8 +3,7 @@
   box-sizing: border-box;
   padding: 0;
 }
-
-.App {
+body {
   padding: 10px;
 }
 
@@ -31,4 +30,25 @@ button {
   background-color: aquamarine;
   padding: 5px;
   margin: 5px;
+}
+
+/* from app.css */
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+  background-color: rgba(22, 26, 26, 0.822);
+  color: rgba(231, 227, 227, 0.959);
+  border-radius: 5px;
+}
+
+.link:hover {
+  background-color: blueviolet;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 10px;
+  align-items: center;
 }

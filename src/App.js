@@ -1,4 +1,5 @@
 import "./App.css";
+import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import DisplayProperties from "./components/DisplayProperties";
 import Footer from "./components/Footer";
@@ -27,7 +28,7 @@ function App() {
       toilets === ""
     ) {
       URL = BASEURL + "/property";
-      setFiltered(false)
+      setFiltered(false);
     } else {
       setFiltered(true);
       let endURL = "/property?";
@@ -71,7 +72,12 @@ function App() {
 
   return (
     <div className="App">
-      <h2>Property Mart v1</h2>
+      <header>
+        <h2>Property Mart v1</h2>
+        <nav>
+          <Link className="link" to="/addProperty">Add New Property</Link>
+        </nav>
+      </header>
       <FilterForm filterOptionsHandler={handleFilterOptions} />
       {filtered ? (
         <DisplayProperties properties={filteredProperties} />
@@ -79,6 +85,7 @@ function App() {
         <DisplayProperties properties={allProperties} />
       )}
       <Footer />
+      <Outlet />
     </div>
   );
 }
