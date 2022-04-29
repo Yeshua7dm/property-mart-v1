@@ -6,7 +6,7 @@ const FilterForm = ({ filterOptionsHandler }) => {
   const { register, handleSubmit } = useForm();
 
   return (
-    <form
+    <form className="filterForm"
       method="post"
       onSubmit={handleSubmit((data) => {
         filterOptionsHandler(data);

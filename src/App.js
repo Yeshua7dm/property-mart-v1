@@ -1,5 +1,5 @@
 import "./App.css";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import DisplayProperties from "./components/DisplayProperties";
 import Footer from "./components/Footer";
@@ -85,7 +85,6 @@ function App() {
         <DisplayProperties properties={allProperties} />
       )}
       <Footer />
-      <Outlet />
     </div>
   );
 }
