@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "./styles/AddProperty.css";
 import { useState, useEffect } from "react";
+import SuccessModal from "./SuccessModal";
+
 const BASEURL = "https://sfc-lekki-property.herokuapp.com/api/v1/lekki";
 const AddProperty = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [minDate, setMinDate] = useState("");
+  const [addResponse, setAddResponse] = useState(null);
+  const [toggleModal, setToggleModal] = useState(false);
 
   useEffect(() => {
     const getMinDate = () => {
@@ -18,7 +22,29 @@ const AddProperty = () => {
     };
     setMinDate(getMinDate);
   }, []);
-
+  const handleClose = () => {
+    setToggleModal(false);
+    reset(
+      {
+        address: "",
+        type: "",
+        bedroom: "",
+        sittingRoom: "",
+        kitchen: "",
+        bathroom: "",
+        toilet: "",
+        propertyOwner: "",
+        description: "",
+        validFrom: "",
+        validTo: "",
+        images: null,
+      },
+      {
+        keepIsValid: false,
+        keepSubmitCount: false,
+      }
+    );
+  };
   const SubmitForm = async (data) => {
     let imagesCollection = [];
 
@@ -38,9 +64,14 @@ const AddProperty = () => {
     try {
       await axios.post(`${BASEURL}/property`, data).then((response) => {
         console.log(response.data);
+        if (response.data.status === "success") {
+          setAddResponse(response.data.data);
+          setToggleModal(true);
+        }
       });
     } catch (error) {
       console.log(error.response.data);
+      alert(error.data.data);
     }
   };
   return (
@@ -60,12 +91,7 @@ const AddProperty = () => {
       >
         <div>
           <label htmlFor="">Property Type</label>
-          <input
-            type="text"
-            name="type"
-            required={false}
-            {...register("type")}
-          />
+          <input type="text" name="type" required {...register("type")} />
         </div>
         <div>
           <label htmlFor="">Number of Bedrooms</label>
@@ -73,7 +99,7 @@ const AddProperty = () => {
             type="number"
             min="1"
             name="bedroom"
-            required={false}
+            required
             {...register("bedroom")}
           />
         </div>
@@ -83,7 +109,7 @@ const AddProperty = () => {
             type="number"
             min="1"
             name="sittingRoom"
-            required={false}
+            required
             {...register("sittingRoom")}
           />
         </div>
@@ -93,7 +119,7 @@ const AddProperty = () => {
             type="number"
             min="1"
             name="kitchen"
-            required={false}
+            required
             {...register("kitchen")}
           />
         </div>
@@ -103,7 +129,7 @@ const AddProperty = () => {
             type="number"
             min="1"
             name="bathroom"
-            required={false}
+            required
             {...register("bathroom")}
           />
         </div>
@@ -113,7 +139,7 @@ const AddProperty = () => {
             type="number"
             min="1"
             name="toilet"
-            required={false}
+            required
             {...register("toilet")}
           />
         </div>
@@ -123,7 +149,7 @@ const AddProperty = () => {
             className="owner"
             type="text"
             name="propertyOwner"
-            required={false}
+            required
             {...register("propertyOwner")}
           />
         </div>
@@ -134,7 +160,7 @@ const AddProperty = () => {
             type="date"
             min={minDate}
             name="validFrom"
-            required={false}
+            required
             {...register("validFrom")}
           />
         </div>
@@ -143,7 +169,7 @@ const AddProperty = () => {
           <input
             type="date"
             name="validTo"
-            required={false}
+            required
             min={minDate}
             {...register("validTo")}
           />
@@ -152,7 +178,7 @@ const AddProperty = () => {
           <label htmlFor="">Property Address</label>
           <textarea
             name="address"
-            required={false}
+            required
             {...register("address")}
             cols="30"
             rows="3"
@@ -163,7 +189,7 @@ const AddProperty = () => {
           <label htmlFor="">Property Description</label>
           <textarea
             name="description"
-            required={false}
+            required
             {...register("description")}
             cols="30"
             rows="3"
@@ -174,7 +200,7 @@ const AddProperty = () => {
           <input
             className="owner"
             type="file"
-            required={false}
+            required
             name="images"
             {...register("images")}
             multiple
@@ -186,6 +212,19 @@ const AddProperty = () => {
           </button>
         </div>
       </form>
+      <button
+        onClick={() => {
+          setToggleModal(!toggleModal);
+        }}
+      >
+        testing
+      </button>
+      {/* modal here */}
+      <SuccessModal
+        toggle={toggleModal}
+        closeModal={handleClose}
+        response={addResponse}
+      />
     </div>
   );
 };
