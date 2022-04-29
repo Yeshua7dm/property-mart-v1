@@ -39,14 +39,25 @@ const DisplayProperties = ({ properties, selectProperty }) => {
                 Bathrooms <span className="number">{property.bathroom}</span>
               </p>
             </section>
+            <div className="buttons">
+
             <button
               className="link"
               onClick={() => {
-                selectProperty(property);
+                selectProperty(property, "view");
               }}
             >
               View Full Property Information
             </button>
+            <button
+              className="link"
+              onClick={() => {
+                selectProperty(property, "update");
+              }}
+            >
+              Update Property Information
+            </button>
+            </div>
           </div>
         </div>
       ))}

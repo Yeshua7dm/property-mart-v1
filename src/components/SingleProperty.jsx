@@ -21,12 +21,13 @@ const SingleProperty = ({ property }) => {
       {property.images.length > 0 && (
         <p className="modal-images">
           {property.images.map((image) => (
+            <p key={image._id}>
             <img
               className="modal-image"
               src={image.path}
               alt={image.originalname}
-              key={image._id}
-            />
+              
+            /> </p>
           ))}
         </p>
       )}

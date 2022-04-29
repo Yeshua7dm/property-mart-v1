@@ -60,3 +60,54 @@ header {
 .property-items p {
   margin-bottom: 5px;
 }
+
+/* MODALS */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+  position: fixed;
+  background: white;
+  width: 60%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+
+.modal-images {
+  display: -ms-grid;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 5px;
+  column-gap: 5px;
+
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+}

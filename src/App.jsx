@@ -6,6 +6,7 @@ import {
   DisplayProperties,
   FilterForm,
   ShowProperty,
+  UpdateProperty,
 } from "./components";
 import { useEffect, useState } from "react";
 const BASEURL = "https://sfc-lekki-property.herokuapp.com/api/v1/lekki";
@@ -15,12 +16,12 @@ function App() {
   const [filtered, setFiltered] = useState(false);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
-  const [toggleModal, setToggleModal] = useState(false);
+  const [toggleViewModal, setToggleViewModal] = useState(false);
+  const [toggleUpdateModal, setToggleUpdateModal] = useState(false);
 
-  const propertyToDisplay = (property) => {
-    console.log(property);
+  const propertyToDisplay = (property, todo) => {
     setSelectedProperty(property);
-    setToggleModal(true);
+    todo === "view" ? setToggleViewModal(true) : setToggleUpdateModal(true);
   };
 
   const handleFilterOptions = async ({
@@ -53,24 +54,26 @@ function App() {
         await axios.get(URL).then((response) => {
           const data =
             response.data.status === "success" ? response.data.data : [];
-          console.log(data);
+
           setFilteredProperties(data);
         });
       } catch (error) {
         console.log(error);
       }
     }
-    console.log(URL);
   };
-  const handleClose = () => {
-    setToggleModal(false);
+  const closeViewModal = () => {
+    setToggleViewModal(false);
+  };
+  const closeUpdateModal = () => {
+    setToggleUpdateModal(false);
   };
   // get all the properties at the start of the process
   useEffect(() => {
     const getAllProperties = async () => {
       try {
         await axios.get(`${BASEURL}/property`).then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           if (response.status === 200) {
             setAllProperties(response.data.data);
           }
@@ -106,11 +109,18 @@ function App() {
         />
       )}
       {selectedProperty && (
-        <ShowProperty
+        <>
+          <ShowProperty
+            property={selectedProperty}
+            toggle={toggleViewModal}
+            closeModal={closeViewModal}
+          />
+          <UpdateProperty
           property={selectedProperty}
-          toggle={toggleModal}
-          closeModal={handleClose}
-        />
+          toggle={toggleUpdateModal}
+          closeModal={closeUpdateModal}
+          />
+        </>
       )}
       <Footer />
     </div>
