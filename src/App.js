@@ -1,15 +1,27 @@
 import "./App.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import DisplayProperties from "./components/DisplayProperties";
-import Footer from "./components/Footer";
+import {
+  Footer,
+  DisplayProperties,
+  FilterForm,
+  ShowProperty,
+} from "./components";
 import { useEffect, useState } from "react";
-import FilterForm from "./components/FilterForm";
 const BASEURL = "https://sfc-lekki-property.herokuapp.com/api/v1/lekki";
+
 function App() {
   const [allProperties, setAllProperties] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteredProperties, setFilteredProperties] = useState([]);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const propertyToDisplay = (property) => {
+    console.log(property);
+    setSelectedProperty(property);
+    setToggleModal(true);
+  };
 
   const handleFilterOptions = async ({
     bedrooms,
@@ -19,7 +31,6 @@ function App() {
     toilets,
   }) => {
     let URL = "";
-    console.log(bedrooms, sittingRooms, bathrooms, kitchens, toilets);
     if (
       bedrooms === "" &&
       sittingRooms === "" &&
@@ -51,7 +62,9 @@ function App() {
     }
     console.log(URL);
   };
-
+  const handleClose = () => {
+    setToggleModal(false);
+  };
   // get all the properties at the start of the process
   useEffect(() => {
     const getAllProperties = async () => {
@@ -75,14 +88,29 @@ function App() {
       <header>
         <h2>Property Mart v1</h2>
         <nav>
-          <Link className="link" to="/addProperty">Add New Property</Link>
+          <Link className="link" to="/addProperty">
+            Add New Property
+          </Link>
         </nav>
       </header>
       <FilterForm filterOptionsHandler={handleFilterOptions} />
       {filtered ? (
-        <DisplayProperties properties={filteredProperties} />
+        <DisplayProperties
+          properties={filteredProperties}
+          selectProperty={propertyToDisplay}
+        />
       ) : (
-        <DisplayProperties properties={allProperties} />
+        <DisplayProperties
+          properties={allProperties}
+          selectProperty={propertyToDisplay}
+        />
+      )}
+      {selectedProperty && (
+        <ShowProperty
+          property={selectedProperty}
+          toggle={toggleModal}
+          closeModal={handleClose}
+        />
       )}
       <Footer />
     </div>

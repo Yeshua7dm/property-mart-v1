@@ -31,20 +31,14 @@
     justify-content: space-between;
     margin-top: 5px;
 }
-.property-items {
-    padding: 5px;
-}
 
-.property-items p {
-    margin-bottom: 5px;
-}
 
 .modal-images {
     display: -ms-grid;
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 5px;
-    column-gap: 10px;
+    column-gap: 5px;
 
 }
 .modal-image {

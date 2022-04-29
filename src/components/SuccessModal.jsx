@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { SingleProperty } from "./";
 import "./styles/modal.css";
 
 const SuccessModal = ({ toggle, response, closeModal }) => {
@@ -25,6 +26,15 @@ const SuccessModal = ({ toggle, response, closeModal }) => {
         size: 3644393,
         filename: "sfc/lekki/vyeijddxet08x9mrin81",
       },
+      {
+        fieldname: "file",
+        originalname: "Screenshot (17).png",
+        encoding: "7bit",
+        mimetype: "image/png",
+        path: "https://res.cloudinary.com/moyinoluwa/image/upload/v1651241906/sfc/lekki/vyeijddxet08x9mrin81.png",
+        size: 3644393,
+        filename: "sfc/lekki/vyeijddxet08x9mrin81",
+      },
     ],
     _id: "626bf3b4b661b54a26e4f679",
     createdAt: "2022-04-29T14:18:28.101Z",
@@ -37,27 +47,7 @@ const SuccessModal = ({ toggle, response, closeModal }) => {
     <div className={toggleModal}>
       <section className="modal-main">
         <h3>Property was successfully added</h3>
-        {response && (
-          <div className="property-items">
-            <p>Property Owner: {response.propertyOwner}</p>
-            <p>Description: {response.description}</p>
-            <p>Valid From: {response.validFrom}</p>
-            <p>Valid Till: {response.validTo}</p>
-            <p>Address: {response.address}</p>
-            <p>Property Type: {response.type}</p>
-            <p>Number of Bedrooms: {response.bedroom}</p>
-            <p>Number of Sitting rooms: {response.sittingRoom}</p>
-            <p>Number of Kitchens: {response.kitchen}</p>
-            <p>Number of Bathrooms: {response.bathroom}</p>
-            <p>Number of Toilets: {response.toilet}</p>
-
-            { response.images.length > 0 && response.images.map((image) => (
-              <p className="modal-images">
-                <img className="modal-image" src={image.path} alt={image.originalname} key={image._id} />
-              </p>
-            ))}
-          </div>
-        )}
+        {response && <SingleProperty property={response} />}
 
         <div className="buttons">
           <Link className="link" to="/">

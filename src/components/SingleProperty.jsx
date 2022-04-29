@@ -1,46 +1,35 @@
 import React from "react";
-import "./styles/SingleProperty.css";
+import "./styles/modal.css";
 const SingleProperty = ({ property }) => {
-  const updateProperty = (propertyID) => {
-    console.log(propertyID);
-  };
+  // const updateProperty = (propertyID) => {
+  //   console.log(propertyID);
+  // };
   return (
-    <div className="SingleProperty">
-      <div className="far-end">
-        <p><span className="number">{property.type}</span></p>
-      </div>
-      <div>
-        <section className="flex-even">
-          <p>
-            Sitting Rooms <span className="number">{property.sittingRoom}</span>
-          </p>
-          <p>
-            Bedrooms <span className="number">{property.bedroom}</span>
-          </p>
-          <p>
-            Kitchens <span className="number">{property.kitchen}</span>
-          </p>
-        </section>
-        <section className="flex-even">
-          <p>
-            Toilet <span className="number">{property.toilet}</span>
-          </p>
-          <p>
-            Bathrooms <span className="number">{property.bathroom}</span>
-          </p>
-        </section>
-        <section className="flex-end">
-          <p>
-            Toilet <span className="number">{property.toilet}</span>
-          </p>
-          <p>
-            Bathrooms <span className="number">{property.bathroom}</span>
-          </p>
-        </section>
-        <button onClick={() => updateProperty(property._id)}>
-          Update Property
-        </button>
-      </div>
+    <div className="property-items">
+      <p>Property Owner: {property.propertyOwner}</p>
+      <p>Description: {property.description}</p>
+      <p>Valid From: {property.validFrom}</p>
+      <p>Valid Till: {property.validTo}</p>
+      <p>Address: {property.address}</p>
+      <p>Property Type: {property.type}</p>
+      <p>Number of Bedrooms: {property.bedroom}</p>
+      <p>Number of Sitting rooms: {property.sittingRoom}</p>
+      <p>Number of Kitchens: {property.kitchen}</p>
+      <p>Number of Bathrooms: {property.bathroom}</p>
+      <p>Number of Toilets: {property.toilet}</p>
+
+      {property.images.length > 0 && (
+        <p className="modal-images">
+          {property.images.map((image) => (
+            <img
+              className="modal-image"
+              src={image.path}
+              alt={image.originalname}
+              key={image._id}
+            />
+          ))}
+        </p>
+      )}
     </div>
   );
 };

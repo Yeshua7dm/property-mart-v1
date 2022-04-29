@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import "./styles/AddProperty.css";
 import { useState, useEffect } from "react";
-import SuccessModal from "./SuccessModal";
+import { SuccessModal } from "./";
 
 const BASEURL = "https://sfc-lekki-property.herokuapp.com/api/v1/lekki";
 const AddProperty = () => {
@@ -212,13 +212,7 @@ const AddProperty = () => {
           </button>
         </div>
       </form>
-      <button
-        onClick={() => {
-          setToggleModal(!toggleModal);
-        }}
-      >
-        testing
-      </button>
+
       {/* modal here */}
       <SuccessModal
         toggle={toggleModal}

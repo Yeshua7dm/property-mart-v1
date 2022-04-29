@@ -53,3 +53,10 @@ header {
   align-items: center;
 }
 
+.property-items {
+  padding: 5px;
+}
+
+.property-items p {
+  margin-bottom: 5px;
+}
