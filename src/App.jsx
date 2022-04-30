@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   Footer,
-  DisplayProperties,
+  PropertyItem,
   FilterForm,
   ShowProperty,
   UpdateProperty,
@@ -97,17 +97,21 @@ function App() {
         </nav>
       </header>
       <FilterForm filterOptionsHandler={handleFilterOptions} />
-      {filtered ? (
-        <DisplayProperties
-          properties={filteredProperties}
-          selectProperty={propertyToDisplay}
-        />
-      ) : (
-        <DisplayProperties
-          properties={allProperties}
-          selectProperty={propertyToDisplay}
-        />
-      )}
+      {filtered
+        ? filteredProperties.map((property) => (
+            <PropertyItem
+              key={property._id}
+              property={property}
+              selectProperty={propertyToDisplay}
+            />
+          ))
+        : allProperties.map((property) => (
+            <PropertyItem
+              key={property._id}
+              property={property}
+              selectProperty={propertyToDisplay}
+            />
+          ))}
       {selectedProperty && (
         <>
           <ShowProperty
@@ -116,9 +120,9 @@ function App() {
             closeModal={closeViewModal}
           />
           <UpdateProperty
-          property={selectedProperty}
-          toggle={toggleUpdateModal}
-          closeModal={closeUpdateModal}
+            property={selectedProperty}
+            toggle={toggleUpdateModal}
+            closeModal={closeUpdateModal}
           />
         </>
       )}
