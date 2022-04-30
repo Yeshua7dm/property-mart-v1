@@ -1,6 +1,5 @@
 import React from "react";
 import SingleProperty from "./SingleProperty";
-import "./styles/modal.css";
 
 const ShowProperty = ({ property, toggle, closeModal }) => {
   const toggleModal = toggle ? "modal display-block" : "modal display-none";

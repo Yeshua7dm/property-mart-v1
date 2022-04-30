@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SingleProperty } from "./";
-import "./styles/modal.css";
 
 const SuccessModal = ({ toggle, response, closeModal }) => {
   const toggleModal = toggle ? "modal display-block" : "modal display-none";

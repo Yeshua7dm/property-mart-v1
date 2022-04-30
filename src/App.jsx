@@ -97,21 +97,23 @@ function App() {
         </nav>
       </header>
       <FilterForm filterOptionsHandler={handleFilterOptions} />
-      {filtered
-        ? filteredProperties.map((property) => (
+      {filtered ? (
+        filteredProperties.map((property) => (
+          <PropertyItem
+            key={property._id}
+            property={property}
+            selectProperty={propertyToDisplay}
+          />
+        ))
+      ) : (
+        allProperties.map((property) => (
             <PropertyItem
               key={property._id}
               property={property}
               selectProperty={propertyToDisplay}
             />
           ))
-        : allProperties.map((property) => (
-            <PropertyItem
-              key={property._id}
-              property={property}
-              selectProperty={propertyToDisplay}
-            />
-          ))}
+      )}
       {selectedProperty && (
         <>
           <ShowProperty

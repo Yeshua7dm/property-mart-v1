@@ -1,5 +1,4 @@
 import React from "react";
-import "./styles/modal.css";
 const SingleProperty = ({ property }) => {
   // const updateProperty = (propertyID) => {
   //   console.log(propertyID);
