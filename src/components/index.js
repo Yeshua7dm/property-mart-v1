@@ -6,4 +6,4 @@ export { default as SuccessModal } from "./SuccessModal";
 export { default as SingleProperty } from "./SingleProperty";
 export { default as PropertyItem } from "./PropertyItem";
 export { default as UpdateProperty } from "./UpdateProperty";
-export { default as Pagination } from "./Pagination";
+// export { default as Pagination } from "./Pagination";
