@@ -2,11 +2,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./styles/FilterForm.css";
 
-const FilterForm = ({ filterOptionsHandler }) => {
+const FilterForm = ({ filterOptionsHandler, propertyOwners }) => {
   const { register, handleSubmit } = useForm();
 
   return (
-    <form className="filterForm"
+    <form
+      className="filterForm"
       method="post"
       onSubmit={handleSubmit((data) => {
         filterOptionsHandler(data);
@@ -54,8 +55,15 @@ const FilterForm = ({ filterOptionsHandler }) => {
       </div>
       <div>
         <p>Property Owner</p>
-        <select name="propertyOwner" id="">
-          <option value="Build">Build</option>
+        <select name="propertyOwner" id="" {...register("propertyOwner")}>
+          <option disabled selected>
+            Select an option
+          </option>
+          {propertyOwners.map((owner) => (
+            <option key={owner} value={owner}>
+              {owner}
+            </option>
+          ))}
         </select>
       </div>
       <div>

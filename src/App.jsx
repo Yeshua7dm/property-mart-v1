@@ -18,6 +18,7 @@ function App() {
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [toggleViewModal, setToggleViewModal] = useState(false);
   const [toggleUpdateModal, setToggleUpdateModal] = useState(false);
+  const [owners, setOwners] = useState([]);
 
   const propertyToDisplay = (property, todo) => {
     setSelectedProperty(property);
@@ -29,6 +30,7 @@ function App() {
     sittingRooms,
     bathrooms,
     kitchens,
+    propertyOwner,
     toilets,
   }) => {
     let URL = "";
@@ -37,10 +39,12 @@ function App() {
       sittingRooms === "" &&
       bathrooms === "" &&
       kitchens === "" &&
-      toilets === ""
+      toilets === "" &&
+      propertyOwner === ""
     ) {
       URL = BASEURL + "/property";
       setFiltered(false);
+      alert("No filtering option selected");
     } else {
       setFiltered(true);
       let endURL = "/property?";
@@ -49,6 +53,7 @@ function App() {
       endURL += bathrooms ? `&bathroom=${bathrooms}` : "";
       endURL += kitchens ? `&kitchen=${kitchens}` : "";
       endURL += toilets ? `&toilet=${toilets}` : "";
+      endURL += propertyOwner ? `&propertyOwner=${propertyOwner}` : "";
       URL = BASEURL + endURL;
       try {
         await axios.get(URL).then((response) => {
@@ -73,9 +78,12 @@ function App() {
     const getAllProperties = async () => {
       try {
         await axios.get(`${BASEURL}/property`).then((response) => {
-          // console.log(response.data.data);
           if (response.status === 200) {
             setAllProperties(response.data.data);
+            const owners = [
+              ...new Set(response.data.data.map((data) => data.propertyOwner)),
+            ];
+            setOwners(owners.sort());
           }
         });
       } catch (error) {
@@ -96,24 +104,25 @@ function App() {
           </Link>
         </nav>
       </header>
-      <FilterForm filterOptionsHandler={handleFilterOptions} />
-      {filtered ? (
-        filteredProperties.map((property) => (
-          <PropertyItem
-            key={property._id}
-            property={property}
-            selectProperty={propertyToDisplay}
-          />
-        ))
-      ) : (
-        allProperties.map((property) => (
+      <FilterForm
+        filterOptionsHandler={handleFilterOptions}
+        propertyOwners={owners}
+      />
+      {filtered
+        ? filteredProperties.map((property) => (
             <PropertyItem
               key={property._id}
               property={property}
               selectProperty={propertyToDisplay}
             />
           ))
-      )}
+        : allProperties.map((property) => (
+            <PropertyItem
+              key={property._id}
+              property={property}
+              selectProperty={propertyToDisplay}
+            />
+          ))}
       {selectedProperty && (
         <>
           <ShowProperty
